@@ -1,0 +1,18 @@
+# Set the base image.
+FROM node:16.19.0
+
+# Define the directory path as an environment variable
+ENV GULP_THEME_DIR %theme_directory%
+
+RUN mkdir $GULP_THEME_DIR
+WORKDIR $GULP_THEME_DIR
+
+RUN apt-get update && apt-get install -y autoconf automake zlib1g-dev git
+
+COPY $THEME_DIR/package*.json ./
+
+RUN npm install
+RUN npm install --force -g gulp
+RUN npm install --force -g gulp-cli
+
+COPY ./* $THEME_DIR

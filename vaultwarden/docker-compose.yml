@@ -1,0 +1,26 @@
+services:
+  nginx:
+        container_name: nginx
+        image: nginx:latest
+        ports:
+            - "443:443"
+            - "80:80"
+        volumes:
+            - /home/ubuntu/nginx-server/nginx.conf:/etc/nginx/nginx.conf
+            - /etc/letsencrypt/live/sahdoum.guru/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+            - /etc/letsencrypt/live/sahdoum.guru/privkey.pem:/etc/nginx/ssl/privkey.pem
+        networks:
+          - app-network
+
+  vaultwarden:
+      image: vaultwarden/server:latest
+      ports: 
+        - "505:80"
+      volumes:
+        - /vw-data/:/data/
+      networks:
+        - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,21 @@
+stages:
+  - build
+
+build:
+  stage: build
+  image: node:16.19.0
+  script:
+    - apt-get update -q
+    - apt-get install -y -q autoconf automake zlib1g-dev sshpass
+    - cd wp-content/themes/citwatch
+    - npm install
+    - npm install --force -g gulp
+    - npm install --force -g gulp-cli
+    - gulp full-build
+    - rm -rf node_modules
+    - sshpass -p "$SSH_PASSWORD" scp -v -o StrictHostKeyChecking=no -r * "$SSH_USER"@"$SSH_HOST":"$DEPLOY_TARGET_DIRECTORY"
+  artifacts:
+    paths:
+      - wp-content/themes/citwatch/assets
+  only:
+    - production
