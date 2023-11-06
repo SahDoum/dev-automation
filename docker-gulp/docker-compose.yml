@@ -2,7 +2,7 @@ version: "3"
 
 services:
   wordpress:
-    container_name: wp-citwatch
+    container_name: wp
     image: wordpress
     ports:
       - "80:80"

@@ -7,7 +7,7 @@ build:
   script:
     - apt-get update -q
     - apt-get install -y -q autoconf automake zlib1g-dev sshpass
-    - cd wp-content/themes/citwatch
+    - cd $GULP_THEME_DIR
     - npm install
     - npm install --force -g gulp
     - npm install --force -g gulp-cli
@@ -16,6 +16,6 @@ build:
     - sshpass -p "$SSH_PASSWORD" scp -v -o StrictHostKeyChecking=no -r * "$SSH_USER"@"$SSH_HOST":"$DEPLOY_TARGET_DIRECTORY"
   artifacts:
     paths:
-      - wp-content/themes/citwatch/assets
+      - $GULP_THEME_DIR/assets
   only:
     - production

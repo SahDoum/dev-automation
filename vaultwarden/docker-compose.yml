@@ -7,12 +7,14 @@ services:
             - "80:80"
         volumes:
             - /home/ubuntu/nginx-server/nginx.conf:/etc/nginx/nginx.conf
+            - ./:/home/ubuntu/nginx-server
             - /etc/letsencrypt/live/sahdoum.guru/fullchain.pem:/etc/nginx/ssl/fullchain.pem
             - /etc/letsencrypt/live/sahdoum.guru/privkey.pem:/etc/nginx/ssl/privkey.pem
         networks:
           - app-network
 
   vaultwarden:
+      container_name: vault
       image: vaultwarden/server:latest
       ports: 
         - "505:80"
